@@ -386,11 +386,11 @@ module Trackvia
 
     # Gets all accessible records accessible in the authorized view.
     #
-    def get_records(view_id)
+    def get_records(view_id, start = 0, max = 1000)
       begin
         url = "#{base_uri}/openapi/views/#{view_id}"
 
-        json = RestClient.get url, { :params => auth_params, :accept => :json }
+        json = RestClient.get url, { :params => auth_params.merge({'start' => start, 'max' => max}), :accept => :json }
         records = JSON.parse(json)
 
       rescue RestClient::Exception => e
