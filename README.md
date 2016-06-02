@@ -20,7 +20,7 @@ Start by trying to authenticate your user and make a simple request:
 
   @client = Trackvia::Client.new(user_key: "abcd1234")
   @client.authorize('username', 'password')
-  apps = @client.getApps
+  apps = @client.get_apps()
 
 Obtain a user key by enabling the API at:
 
