@@ -106,7 +106,7 @@ require 'trackvia-api-sdk/exceptions'
 #   view_id = 1
 #   record1 = { 'name' => 'Bob Dobbs' }
 #   record2 = { 'name' => 'Larry Lordly' }
-#   batch_of_records = { 'data' => [ record1, record2 ] }
+#   batch_of_records = [ record1, record2 ]
 #   created = @client.create_records(view_id, batch_of_records)
 #
 # Updating and deleting records follow a similar pattern.
