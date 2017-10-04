@@ -427,8 +427,8 @@ module Trackvia
       begin
         url = "#{base_uri}/openapi/views/#{view_id}/records?#{encoded_auth_url}"
         new_records = { "data" => batch }
-        json = RestClient::Request.execute(:method => :post, :payload => new_records.to_json, :url => url, :timeout => 120, :open_timeout => 120)
-        records = JSON.parse(json)
+        json = RestClient.post url, batch.to_json, { :accept => :json, :content_type => :json }
+        record = JSON.parse(json)
       rescue RestClient::Exception => e
         retry if maybe_retry_when_bad_auth_token(e)
       end
