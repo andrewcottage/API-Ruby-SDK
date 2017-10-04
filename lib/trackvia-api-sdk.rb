@@ -153,7 +153,7 @@ module Trackvia
     DEFAULT_BASE_PATH = "/"
     DEFAULT_SCHEME = "https"
     DEFAULT_HOST = "go.trackvia.com"
-    DEFAULT_PORT = 443 
+    DEFAULT_PORT = 443
     OAUTH_CLIENT_ID = "xvia-webapp"
 
     def initialize(scheme: DEFAULT_SCHEME, host: DEFAULT_HOST, port: DEFAULT_PORT, base_path: DEFAULT_BASE_PATH, user_key: '')
@@ -467,6 +467,20 @@ module Trackvia
     def delete_record(view_id, record_id)
       begin
         url = "#{base_uri}/openapi/views/#{view_id}/records/#{record_id}"
+
+        RestClient.delete url, { :params => auth_params, :accept => :json }
+
+      rescue RestClient::Exception => e
+        retry if maybe_retry_when_bad_auth_token(e)
+      end
+    end
+
+    # Deletes all records in the authorized view.  The authenticated user must have form-level
+    # write permission to delete the records
+    #
+    def delete_records(view_id)
+      begin
+        url = "#{base_uri}/openapi/views/#{view_id}/records/all"
 
         RestClient.delete url, { :params => auth_params, :accept => :json }
 
